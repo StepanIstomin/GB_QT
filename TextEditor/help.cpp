@@ -6,12 +6,12 @@ Help::Help(QWidget *parent) :
     ui(new Ui::Help)
 {
     ui->setupUi(this);
+    setWindowTitle(tr("Справка"));
 
-    QFile fileHelp(":/help/Help.txt");
+    QFile fileHelp(":/Help.txt");
     if (fileHelp.open(QIODevice::ReadOnly)){
         QByteArray ba = fileHelp.readAll();
         QString textHelp(ba);
-        //ui->text->setText(textHelp);
         ui->textBrowser->setText(textHelp);
     }
 }

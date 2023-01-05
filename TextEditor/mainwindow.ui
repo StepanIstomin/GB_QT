@@ -58,14 +58,23 @@
     </property>
     <addaction name="action_open"/>
     <addaction name="action_save"/>
+    <addaction name="action_readonly"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
      <string>О программе</string>
     </property>
-    <addaction name="action_2"/>
+    <addaction name="action_help"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>Язык</string>
+    </property>
+    <addaction name="action_lang_ru"/>
+    <addaction name="action_lang_en"/>
    </widget>
    <addaction name="menu"/>
+   <addaction name="menu_3"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -79,9 +88,24 @@
     <string>Сохранить</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="action_help">
    <property name="text">
     <string>Справка</string>
+   </property>
+  </action>
+  <action name="action_readonly">
+   <property name="text">
+    <string>Открыть только для чтения</string>
+   </property>
+  </action>
+  <action name="action_lang_ru">
+   <property name="text">
+    <string>Русский</string>
+   </property>
+  </action>
+  <action name="action_lang_en">
+   <property name="text">
+    <string>Английский</string>
    </property>
   </action>
  </widget>

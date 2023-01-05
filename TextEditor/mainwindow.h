@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
+#include <QTranslator>
+#include <QString>
+#include <QKeyEvent>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,11 +23,34 @@ public:
 private slots:
     void on_action_open_triggered();
 
-    void on_action_2_triggered();
+    void on_action_help_triggered();
 
     void on_action_save_triggered();
 
+    void on_action_readonly_triggered();
+
+    void on_action_lang_ru_triggered();
+
+    void on_action_lang_en_triggered();
+
+    void setTitle();
+    void slotOpenFile(bool readOnly);
+    void slotSaveFile();
+    void slotNewFile();
+
+protected:
+    void keyReleaseEvent(QKeyEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
+
 private:
     Ui::MainWindow *ui;
+
+    QString title;
+    QString curFilename = "";
+    QString curLanguage;
+    QTranslator translator; // Объект перевода
+    void switchLanguage(QString language); //Метод переключения
+
+    bool pressCTRL = false;
 };
 #endif // MAINWINDOW_H
