@@ -7,7 +7,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    setStyleSheet("\
+        QWidget {background-color: lightGray;}\
+        QTextEdit {background-color: white;}\
+        QMenuBar {background-color: white; color: black}\
+        QMenu::item:selected {background-color: white; color: black}\
+        ");
     curLanguage = "ru";
     setTitle();
 }
@@ -51,12 +56,16 @@ void MainWindow::switchLanguage(QString language)
         ui->action_readonly->setText(tr("Открыть только для чтения"));
         ui->action_save->setText(tr("Сохранить"));
 
-        ui->menu_2->setTitle(tr("Язык"));
+        ui->menu_3->setTitle(tr("Язык"));
         ui->action_lang_ru->setText(tr("Русский"));
         ui->action_lang_en->setText(tr("Английский"));
 
-        ui->menu_3->setTitle(tr("О программе"));
+        ui->menu_2->setTitle(tr("О программе"));
         ui->action_help->setText(tr("Справка"));
+
+        ui->menu_style->setTitle(tr("Тема"));
+        ui->action_bright->setText(tr("Светлая"));
+        ui->action_dark->setText(tr("Темная"));
 
         curLanguage = language;
         QLocale locale = QLocale(curLanguage);
@@ -151,4 +160,29 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
         pressCTRL = false;
 }
 
+
+
+void MainWindow::on_action_dark_triggered()
+{
+    setStyleSheet("\
+QWidget {background-color: gray;}\
+QTextEdit {background-color: black; color: white}\
+QMenuBar {background-color: black; color: white}\
+QMenuBar::item:selected {background-color: gray; color: white}\
+QMenu::item {background-color: gray; color: white}\
+QMenu::item:selected {background-color: darkGray; color: black}\
+");
+
+}
+
+
+void MainWindow::on_action_bright_triggered()
+{
+    setStyleSheet("\
+QWidget {background-color: lightGray;}\
+QTextEdit {background-color: white;}\
+QMenuBar {background-color: white; color: black}\
+QMenu::item:selected {background-color: white; color: black}\
+");
+}
 

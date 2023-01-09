@@ -40,53 +40,68 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="83"/>
+        <location filename="mainwindow.ui" line="78"/>
+        <source>Тема</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="91"/>
         <location filename="mainwindow.cpp" line="55"/>
         <source>Открыть</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="88"/>
+        <location filename="mainwindow.ui" line="96"/>
         <location filename="mainwindow.cpp" line="57"/>
         <source>Сохранить</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="93"/>
+        <location filename="mainwindow.ui" line="101"/>
         <location filename="mainwindow.cpp" line="64"/>
         <source>Справка</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="98"/>
+        <location filename="mainwindow.ui" line="106"/>
         <location filename="mainwindow.cpp" line="56"/>
         <source>Открыть только для чтения</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="103"/>
+        <location filename="mainwindow.ui" line="111"/>
         <location filename="mainwindow.cpp" line="60"/>
         <source>Русский</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="108"/>
+        <location filename="mainwindow.ui" line="116"/>
         <location filename="mainwindow.cpp" line="61"/>
         <source>Английский</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="91"/>
+        <location filename="mainwindow.ui" line="121"/>
+        <source>Светлая</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="126"/>
+        <source>Темная</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="90"/>
         <source>Текстовый редактор</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="113"/>
+        <location filename="mainwindow.cpp" line="112"/>
         <source>Сохранить файл</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="100"/>
+        <location filename="mainwindow.cpp" line="99"/>
         <source>Открыть файл для чтения</source>
         <translation type="unfinished"></translation>
     </message>
@@ -96,12 +111,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="89"/>
+        <location filename="mainwindow.cpp" line="88"/>
         <source>Текстовый редактор - </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="128"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>Создать новый документ</source>
         <oldsource>Новый файл</oldsource>
         <translation type="unfinished"></translation>

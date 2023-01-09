@@ -73,8 +73,16 @@
     <addaction name="action_lang_ru"/>
     <addaction name="action_lang_en"/>
    </widget>
+   <widget class="QMenu" name="menu_style">
+    <property name="title">
+     <string>Тема</string>
+    </property>
+    <addaction name="action_bright"/>
+    <addaction name="action_dark"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_3"/>
+   <addaction name="menu_style"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -106,6 +114,16 @@
   <action name="action_lang_en">
    <property name="text">
     <string>Английский</string>
+   </property>
+  </action>
+  <action name="action_bright">
+   <property name="text">
+    <string>Светлая</string>
+   </property>
+  </action>
+  <action name="action_dark">
+   <property name="text">
+    <string>Темная</string>
    </property>
   </action>
  </widget>

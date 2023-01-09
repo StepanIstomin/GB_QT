@@ -38,6 +38,10 @@ private slots:
     void slotSaveFile();
     void slotNewFile();
 
+    void on_action_dark_triggered();
+
+    void on_action_bright_triggered();
+
 protected:
     void keyReleaseEvent(QKeyEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
