@@ -6,7 +6,8 @@
 #include <QTranslator>
 #include <QString>
 #include <QKeyEvent>
-
+#include <QPrinter>
+#include <QPrintDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -37,10 +38,13 @@ private slots:
     void slotOpenFile(bool readOnly);
     void slotSaveFile();
     void slotNewFile();
+    void slotPrint();
 
     void on_action_dark_triggered();
 
     void on_action_bright_triggered();
+
+    void on_action_print_triggered();
 
 protected:
     void keyReleaseEvent(QKeyEvent* event) override;
@@ -53,7 +57,7 @@ private:
     QString curFilename = "";
     QString curLanguage;
     QTranslator translator; // Объект перевода
-    void switchLanguage(QString language); //Метод переключения
+    void switchLanguage(QString language); //Метод переключения языка
 
     bool pressCTRL = false;
 };

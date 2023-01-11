@@ -31,15 +31,9 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>780</width>
-      <height>540</height>
+      <width>781</width>
+      <height>541</height>
      </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
     </property>
    </widget>
   </widget>
@@ -59,6 +53,7 @@
     <addaction name="action_open"/>
     <addaction name="action_save"/>
     <addaction name="action_readonly"/>
+    <addaction name="action_print"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -124,6 +119,11 @@
   <action name="action_dark">
    <property name="text">
     <string>Темная</string>
+   </property>
+  </action>
+  <action name="action_print">
+   <property name="text">
+    <string>Печать</string>
    </property>
   </action>
  </widget>

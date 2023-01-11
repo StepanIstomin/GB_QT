@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     setStyleSheet("\
         QWidget {background-color: lightGray;}\
         QTextEdit {background-color: white;}\
@@ -55,6 +56,7 @@ void MainWindow::switchLanguage(QString language)
         ui->action_open->setText(tr("Открыть"));
         ui->action_readonly->setText(tr("Открыть только для чтения"));
         ui->action_save->setText(tr("Сохранить"));
+        ui->action_print->setText(tr("Печать"));
 
         ui->menu_3->setTitle(tr("Язык"));
         ui->action_lang_ru->setText(tr("Русский"));
@@ -109,7 +111,7 @@ void MainWindow::slotOpenFile(bool readOnly) {
         ui->textEdit->setText(text);
         setTitle();
     }
-}
+ }
 
 void MainWindow::slotSaveFile()
 {
@@ -140,19 +142,30 @@ void MainWindow::slotNewFile()
     }
 }
 
+void MainWindow::slotPrint()
+{
+    QPrinter printer;
+    QPrintDialog printDlg(&printer,this);
+    printDlg.setWindowTitle(tr("Печать"));
+    if (printDlg.exec() != QDialog::Accepted) return;
+    ui->textEdit->print(&printer);
+}
+
+
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Control)
         pressCTRL = true;
-    if (event->key() == Qt::Key_O && pressCTRL)
+    if (event->key() == Qt::Key_O && pressCTRL) //Open
         slotOpenFile(false);
-    if (event->key() == Qt::Key_S && pressCTRL)
+    if (event->key() == Qt::Key_S && pressCTRL) //Save
         slotSaveFile();
-    if (event->key() == Qt::Key_N && pressCTRL)
+    if (event->key() == Qt::Key_N && pressCTRL) //New
         slotNewFile();
-    if (event->key() == Qt::Key_Q && pressCTRL)
+    if (event->key() == Qt::Key_P && pressCTRL) //Print
+        slotPrint();
+    if (event->key() == Qt::Key_Q && pressCTRL) //Quit
         qApp->quit();
-
 }
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
@@ -184,5 +197,11 @@ QTextEdit {background-color: white;}\
 QMenuBar {background-color: white; color: black}\
 QMenu::item:selected {background-color: white; color: black}\
 ");
+}
+
+
+void MainWindow::on_action_print_triggered()
+{
+    slotPrint();
 }
 
