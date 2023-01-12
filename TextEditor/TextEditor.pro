@@ -11,11 +11,13 @@ CONFIG += c++17
 SOURCES += \
     help.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    textwidget.cpp
 
 HEADERS += \
     help.h \
-    mainwindow.h
+    mainwindow.h \
+    textwidget.h
 
 FORMS += \
     help.ui \

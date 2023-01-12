@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    setWindowTitle(tr("Текстовый редактор"));
     setStyleSheet("\
         QWidget {background-color: lightGray;}\
         QTextEdit {background-color: white;}\
@@ -15,7 +15,13 @@ MainWindow::MainWindow(QWidget *parent)
         QMenu::item:selected {background-color: white; color: black}\
         ");
     curLanguage = "ru";
-    setTitle();
+
+    ui->tabWidget->removeTab(0);
+    ui->tabWidget->removeTab(0);
+    ui->tabWidget->setTabsClosable(true);
+    slotNewFile();
+
+    connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::slotCloseFile);
 }
 
 MainWindow::~MainWindow()
@@ -51,24 +57,7 @@ void MainWindow::switchLanguage(QString language)
         translator.load(":/QtLanguage_" + language + ".qm");
         qApp->installTranslator(&translator);
 
-        setTitle();
-        ui->menu->setTitle(tr("Файл"));
-        ui->action_open->setText(tr("Открыть"));
-        ui->action_readonly->setText(tr("Открыть только для чтения"));
-        ui->action_save->setText(tr("Сохранить"));
-        ui->action_print->setText(tr("Печать"));
-
-        ui->menu_3->setTitle(tr("Язык"));
-        ui->action_lang_ru->setText(tr("Русский"));
-        ui->action_lang_en->setText(tr("Английский"));
-
-        ui->menu_2->setTitle(tr("О программе"));
-        ui->action_help->setText(tr("Справка"));
-
-        ui->menu_style->setTitle(tr("Тема"));
-        ui->action_bright->setText(tr("Светлая"));
-        ui->action_dark->setText(tr("Темная"));
-
+        ui->retranslateUi(this);
         curLanguage = language;
         QLocale locale = QLocale(curLanguage);
         QLocale::setDefault(locale);
@@ -88,67 +77,69 @@ void MainWindow::on_action_lang_en_triggered()
     switchLanguage("en");
 }
 
-void MainWindow::setTitle()
-{
-    if (curFilename != "")
-        title = tr("Текстовый редактор - ") + curFilename;
-    else
-        title = tr("Текстовый редактор");
-    setWindowTitle(title);
-}
 
 void MainWindow::slotOpenFile(bool readOnly) {
+    pTextWidget = new TextWidget();
     if (readOnly)
-        ui->textEdit->setReadOnly(true);
+        pTextWidget->readOnly(true);
     else
-        ui->textEdit->setReadOnly(false);
+        pTextWidget->readOnly(false);
     QString filePath = QFileDialog::getOpenFileName(this,tr("Открыть файл для чтения"),"","Text files (*.txt)");
     QFile file(filePath);
+    QFileInfo fileInfo(filePath);
     if (file.open(QIODevice::ReadOnly)){
-        curFilename = file.fileName();
+        QString filename = fileInfo.fileName();
         QByteArray ba = file.readAll();
         QString text(ba);
-        ui->textEdit->setText(text);
-        setTitle();
+        pTextWidget->setText(text);
+        pTextWidget->setName(filename);
+        pTextWidget->setPath(file.fileName());
+        ui->tabWidget->addTab(pTextWidget,QIcon(QString("")),filename);
+        ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
     }
+
  }
 
 void MainWindow::slotSaveFile()
 {
-    QString filePath = QFileDialog::getSaveFileName(this,tr("Сохранить файл"),curFilename,"Text files (*.txt)");
+    TextWidget* curWidget = (TextWidget*)ui->tabWidget->currentWidget();
+    QString filename = curWidget->name();
+    QString path = curWidget->path();
+    QString filePath = QFileDialog::getSaveFileName(ui->tabWidget->currentWidget(),tr("Сохранить файл"),path,"Text files (*.txt)");
     QFile file (filePath);
+    QFileInfo fileInfo(filePath);
     if (file.open(QIODevice::WriteOnly)){
-        curFilename = file.fileName();
+        filename = fileInfo.fileName();
         QTextStream stream(&file);
-        QString str = ui->textEdit->toPlainText();
+        QString str = curWidget->text();
         stream << str;
         file.close();
-        setTitle();
+        curWidget->setName(filename);
+        ui->tabWidget->setTabText(ui->tabWidget->currentIndex(),filename);
     }
 }
 
 void MainWindow::slotNewFile()
 {
-    ui->textEdit->setText("");
-    QString filePath = QFileDialog::getSaveFileName(this,tr("Создать новый документ"),"","Text files (*.txt)");
-    QFile file (filePath);
-    if (file.open(QIODevice::WriteOnly)){
-        curFilename = file.fileName();
-        QTextStream stream(&file);
-        QString str = ui->textEdit->toPlainText();
-        stream << str;
-        file.close();
-        setTitle();
-    }
+    pTextWidget = new TextWidget();
+    ui->tabWidget->addTab(pTextWidget,QIcon(QString("")),tr("Новый Документ"));
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+    pTextWidget->setName(tr("Новый Документ"));
+}
+
+void MainWindow::slotCloseFile()
+{
+    ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
 }
 
 void MainWindow::slotPrint()
 {
+    TextWidget* curWidget = (TextWidget*)ui->tabWidget->currentWidget();
     QPrinter printer;
     QPrintDialog printDlg(&printer,this);
     printDlg.setWindowTitle(tr("Печать"));
     if (printDlg.exec() != QDialog::Accepted) return;
-    ui->textEdit->print(&printer);
+    curWidget->print(&printer);
 }
 
 
