@@ -22,86 +22,83 @@
         <translation>Text Editor</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="51"/>
-        <location filename="mainwindow.cpp" line="55"/>
+        <location filename="mainwindow.ui" line="43"/>
+        <source>Tab 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="48"/>
+        <source>Tab 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="64"/>
         <source>Файл</source>
         <translation>File</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="60"/>
-        <location filename="mainwindow.cpp" line="65"/>
+        <location filename="mainwindow.ui" line="73"/>
         <source>О программе</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="66"/>
-        <location filename="mainwindow.cpp" line="61"/>
+        <location filename="mainwindow.ui" line="79"/>
         <source>Язык</source>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="73"/>
-        <location filename="mainwindow.cpp" line="68"/>
+        <location filename="mainwindow.ui" line="86"/>
         <source>Тема</source>
         <translation>Theme</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="86"/>
-        <location filename="mainwindow.cpp" line="56"/>
+        <location filename="mainwindow.ui" line="99"/>
         <source>Открыть</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="91"/>
-        <location filename="mainwindow.cpp" line="58"/>
+        <location filename="mainwindow.ui" line="104"/>
         <source>Сохранить</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="96"/>
-        <location filename="mainwindow.cpp" line="66"/>
+        <location filename="mainwindow.ui" line="109"/>
         <source>Справка</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="101"/>
-        <location filename="mainwindow.cpp" line="57"/>
+        <location filename="mainwindow.ui" line="114"/>
         <source>Открыть только для чтения</source>
         <translation>Open read-only</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="106"/>
-        <location filename="mainwindow.cpp" line="62"/>
+        <location filename="mainwindow.ui" line="119"/>
         <source>Русский</source>
         <translation>Russian</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="111"/>
-        <location filename="mainwindow.cpp" line="63"/>
+        <location filename="mainwindow.ui" line="124"/>
         <source>Английский</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="116"/>
-        <location filename="mainwindow.cpp" line="69"/>
+        <location filename="mainwindow.ui" line="129"/>
         <source>Светлая</source>
         <translation>Light</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="121"/>
-        <location filename="mainwindow.cpp" line="70"/>
+        <location filename="mainwindow.ui" line="134"/>
         <source>Темная</source>
         <translation>Dark</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="126"/>
-        <location filename="mainwindow.cpp" line="59"/>
-        <location filename="mainwindow.cpp" line="149"/>
+        <location filename="mainwindow.ui" line="139"/>
+        <location filename="mainwindow.cpp" line="140"/>
         <source>Печать</source>
         <translation>Print</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="96"/>
+        <location filename="mainwindow.cpp" line="10"/>
         <source>Текстовый редактор</source>
         <translation>Text Editor</translation>
     </message>
@@ -110,30 +107,34 @@
         <translation type="vanished">Open file</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="118"/>
+        <location filename="mainwindow.cpp" line="108"/>
         <source>Сохранить файл</source>
         <translation>Save file</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="105"/>
+        <location filename="mainwindow.cpp" line="87"/>
         <source>Открыть файл для чтения</source>
         <translation>Open file read-only</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="76"/>
+        <location filename="mainwindow.cpp" line="65"/>
         <source>Текущий язык переключен на %1</source>
         <translation>Current Language changed to %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="94"/>
-        <source>Текстовый редактор - </source>
-        <translation>Text editor - </translation>
+        <location filename="mainwindow.cpp" line="125"/>
+        <location filename="mainwindow.cpp" line="127"/>
+        <source>Новый Документ</source>
+        <translation>New Document</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="133"/>
+        <source>Текстовый редактор - </source>
+        <translation type="vanished">Text editor - </translation>
+    </message>
+    <message>
         <source>Создать новый документ</source>
         <oldsource>Новый файл</oldsource>
-        <translation>Create new document</translation>
+        <translation type="vanished">Create new document</translation>
     </message>
 </context>
 </TS>

@@ -8,6 +8,11 @@
 #include <QKeyEvent>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QTextEdit>
+#include <QFontDialog>
+#include <QToolBar>
+#include <QSignalMapper>
+#include "textwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -34,10 +39,10 @@ private slots:
 
     void on_action_lang_en_triggered();
 
-    void setTitle();
     void slotOpenFile(bool readOnly);
     void slotSaveFile();
     void slotNewFile();
+    void slotCloseFile();
     void slotPrint();
 
     void on_action_dark_triggered();
@@ -46,6 +51,12 @@ private slots:
 
     void on_action_print_triggered();
 
+    void copyFormat();
+    void pasteFormat();
+    void setFont();
+    void alignText(int a);
+
+
 protected:
     void keyReleaseEvent(QKeyEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
@@ -53,8 +64,7 @@ protected:
 private:
     Ui::MainWindow *ui;
 
-    QString title;
-    QString curFilename = "";
+    TextWidget* pTextWidget;
     QString curLanguage;
     QTranslator translator; // Объект перевода
     void switchLanguage(QString language); //Метод переключения языка
