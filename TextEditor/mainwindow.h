@@ -46,9 +46,7 @@ private slots:
     void slotPrint();
 
     void on_action_dark_triggered();
-
     void on_action_bright_triggered();
-
     void on_action_print_triggered();
 
     void copyFormat();
@@ -56,6 +54,8 @@ private slots:
     void setFont();
     void alignText(int a);
 
+    void slotInsTime();
+    void slotInsDate();
 
 protected:
     void keyReleaseEvent(QKeyEvent* event) override;

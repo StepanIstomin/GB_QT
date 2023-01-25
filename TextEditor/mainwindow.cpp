@@ -8,12 +8,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Текстовый редактор"));
-    setStyleSheet("\
-        QWidget {background-color: lightGray;}\
-        QTextEdit {background-color: white;}\
-        QMenuBar {background-color: white; color: black}\
-        QMenu::item:selected {background-color: white; color: black}\
-        ");
+
+    on_action_bright_triggered();
+
     curLanguage = "ru";
 
     //Toolbar
@@ -26,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     QAction* tbarRight = toolBar->addAction(tr("По правому краю"));
     QAction* tbarCent = toolBar->addAction(tr("По центру"));
     QAction* tbarJust = toolBar->addAction(tr("По растянуть"));
+    toolBar->addSeparator();
+    QAction* tbarDate = toolBar->addAction(tr("Дата"));
+    QAction* tbarTime = toolBar->addAction(tr("Время"));
 
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
@@ -37,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbarFont,SIGNAL(triggered()),this,SLOT(setFont()));
     connect(tbarCopyFormat,SIGNAL(triggered()),this,SLOT(copyFormat()));
     connect(tbarPasteFormat,SIGNAL(triggered()),this,SLOT(pasteFormat()));
+    connect(tbarDate,SIGNAL(triggered()),this,SLOT(slotInsDate()));
+    connect(tbarTime,SIGNAL(triggered()),this,SLOT(slotInsTime()));
 
     QSignalMapper * signalMapper = new QSignalMapper(this);
     signalMapper->setMapping(tbarLeft, 1);
@@ -84,6 +86,7 @@ void MainWindow::switchLanguage(QString language)
         qApp->installTranslator(&translator);
 
         ui->retranslateUi(this);
+
         curLanguage = language;
         QLocale locale = QLocale(curLanguage);
         QLocale::setDefault(locale);
@@ -91,7 +94,6 @@ void MainWindow::switchLanguage(QString language)
         ui->statusbar->showMessage(tr("Текущий язык переключен на %1").arg(languageName));
     }
 }
-
 
 void MainWindow::on_action_lang_ru_triggered()
 {
@@ -102,7 +104,6 @@ void MainWindow::on_action_lang_en_triggered()
 {
     switchLanguage("en");
 }
-
 
 void MainWindow::slotOpenFile(bool readOnly) {
     pTextWidget = new TextWidget();
@@ -197,25 +198,24 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 void MainWindow::on_action_dark_triggered()
 {
     setStyleSheet("\
-QWidget {background-color: gray;}\
-QTextEdit {background-color: black; color: white}\
-QMenuBar {background-color: black; color: white}\
-QMenuBar::item:selected {background-color: gray; color: white}\
-QMenu::item {background-color: gray; color: white}\
-QMenu::item:selected {background-color: darkGray; color: black}\
-");
-
+    QWidget {background-color: gray;}\
+    QTextEdit {background-color: black; color: white}\
+    QMenuBar {background-color: black; color: white}\
+    QMenuBar::item:selected {background-color: gray; color: white}\
+    QMenu::item {background-color: gray; color: white}\
+    QMenu::item:selected {background-color: darkGray; color: black}\
+    ");
 }
 
 
 void MainWindow::on_action_bright_triggered()
 {
     setStyleSheet("\
-QWidget {background-color: lightGray;}\
-QTextEdit {background-color: white;}\
-QMenuBar {background-color: white; color: black}\
-QMenu::item:selected {background-color: white; color: black}\
-");
+    QWidget {background-color: lightGray;}\
+    QTextEdit {background-color: white;}\
+    QMenuBar {background-color: white; color: black}\
+    QMenu::item:selected {background-color: white; color: black}\
+    ");
 }
 
 
@@ -227,23 +227,27 @@ void MainWindow::on_action_print_triggered()
 void MainWindow::copyFormat()
 {
     TextWidget* curWidget = (TextWidget*)ui->tabWidget->currentWidget();
+    if(!curWidget) return void();
     QFont font = curWidget->pTextField->textCursor().charFormat().font();
     curWidget->setFont(font);
+    curWidget->setCurAligment(curWidget->pTextField->alignment());
 }
 
 void MainWindow::pasteFormat()
 {
     TextWidget* curWidget = (TextWidget*)ui->tabWidget->currentWidget();
+    if(!curWidget) return void();
     QTextCharFormat fmt;
     fmt.setFont(curWidget->font());
     curWidget->pTextField->textCursor().setCharFormat(fmt);
+    curWidget->pTextField->setAlignment(curWidget->getAligment());
 }
 
 void MainWindow::setFont()
 {
     TextWidget* curWidget = (TextWidget*)ui->tabWidget->currentWidget();
-
-    QFont font;// = curWidget->pTextField->textCursor().charFormat().font();
+    if(!curWidget) return void();
+    QFont font;
     QFontDialog fntDlg(font,this);
     bool b[] = {true};
     font = fntDlg.getFont(b);
@@ -253,14 +257,32 @@ void MainWindow::setFont()
         curWidget->pTextField->textCursor().setCharFormat(fmt);
         curWidget->pTextField->setCurrentFont(font);
     }
+
 }
 
 void MainWindow::alignText(int a)
 {
     TextWidget* curWidget = (TextWidget*)ui->tabWidget->currentWidget();
+    if(!curWidget) return void();
     if (a == 1) curWidget->pTextField->setAlignment(Qt::AlignLeft);
     else if (a == 2) curWidget->pTextField->setAlignment(Qt::AlignRight);
     else if (a == 3) curWidget->pTextField->setAlignment(Qt::AlignCenter);
     else if (a == 4) curWidget->pTextField->setAlignment(Qt::AlignJustify);
+}
+
+void MainWindow::slotInsTime()
+{
+    TextWidget* curWidget = (TextWidget*)ui->tabWidget->currentWidget();
+    if(!curWidget) return void();
+    QString time = QTime::currentTime().toString("hh:mm");
+    curWidget->pTextField->insertHtml(time);
+}
+
+void MainWindow::slotInsDate()
+{
+    TextWidget* curWidget = (TextWidget*)ui->tabWidget->currentWidget();
+    if(!curWidget) return void();
+    QString date = QDate::currentDate().toString("dd.MM.yyyy");
+    curWidget->pTextField->insertHtml(date);
 }
 

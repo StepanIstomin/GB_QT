@@ -27,6 +27,11 @@ void TextWidget::setFont(QFont font)
     curFont = font;
 }
 
+void TextWidget::setCurAligment(Qt::Alignment a)
+{
+    curAligment = a;
+}
+
 void TextWidget::readOnly(bool ro)
 {
     pTextField->setReadOnly(true);
@@ -35,6 +40,11 @@ void TextWidget::readOnly(bool ro)
 void TextWidget::print(QPrinter* printer)
 {
     pTextField->print(printer);
+}
+
+Qt::Alignment TextWidget::getAligment()
+{
+    return curAligment;
 }
 
 QString TextWidget::name()

@@ -17,8 +17,10 @@ public:
     void setPath(QString path);
     void setText(QString text);
     void setFont(QFont font);
+    void setCurAligment(Qt::Alignment a);
     void readOnly(bool ro);
     void print(QPrinter* printer);
+    Qt::Alignment getAligment();
     QString name();
     QString path();
     QString text();
@@ -29,6 +31,7 @@ private:
     QFont curFont;
     QString curName;
     QString filePath;
+    Qt::Alignment curAligment;
 };
 
 #endif // TEXTWIDGET_H
