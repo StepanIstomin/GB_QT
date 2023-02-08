@@ -2,19 +2,27 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import QtQuick.Dialogs
 import TaskLogic 1.0
 
 Window {
+    id: root
     width: 640
     height: 480
     visible: true
-    title: qsTr("Planner")
+    title: qsTr("Планировщик задач")
 
     TaskLogic{
         id: _taskLogic
     }
     onClosing: {
-        _taskLogic.saveFile(name.text,deadline.text,progress.text)
+        if (_taskLogic.saveCheck(name.text,deadline.text,progress.text) === ""){
+            _taskLogic.saveFile(name.text,deadline.text,progress.text)
+        }
+        else {
+            close.accepted = false
+            quitDialog.open()
+        }
     }
 
     GridLayout{
@@ -64,17 +72,45 @@ Window {
                 border.color: "gray"
             }
         }
+        TextArea {
+            id: tasksCount
+            Layout.row: 1
+            Layout.column: 0
+            placeholderText: "Количество существующих задач: " + _taskLogic.taskCount()
+        }
+
         SaveButton{
             Layout.row: 1
             Layout.column: 2
             width: 100
             height: 30
             onClicked: {
-                _taskLogic.saveFile(name.text,deadline.text,progress.text)
-                name.text = ""
-                deadline.text = ""
-                progress.text = ""
+                if (_taskLogic.saveCheck(name.text,deadline.text,progress.text) === ""){
+                    _taskLogic.saveFile(name.text,deadline.text,progress.text)
+                    name.text = ""
+                    deadline.text = ""
+                    progress.text = ""
+                    tasksCount.placeholderText = "Количество существующих задач: " + _taskLogic.taskCount()
+                }
+                else {
+                    errorDialog.text = _taskLogic.saveCheck(name.text,deadline.text,progress.text)
+                    errorDialog.open()
+                }
             }
         }
+    }
+    MessageDialog{
+        id: errorDialog
+        title: "Ошибка"
+        buttons: MessageDialog.Ok
+        onAccepted: this.close
+    }
+    MessageDialog{
+        id: quitDialog
+        title: "Ошибка"
+        text: qsTr("В данных ошибка, хотите исправить перед закрытием?")
+        buttons: MessageDialog.Yes | MessageDialog.No
+        onAccepted: this.close
+        onRejected: Qt.exit(0)
     }
 }
