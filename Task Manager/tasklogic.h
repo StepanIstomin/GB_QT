@@ -4,7 +4,9 @@
 #include <QObject>
 #include <QString>
 #include <QFile>
-
+#include <QSqlDatabase>
+#include <tablewindow.h>
+#include <QSqlQueryModel>
 
 class TaskLogic : public QObject
 {
@@ -12,14 +14,16 @@ class TaskLogic : public QObject
 public:
     explicit TaskLogic(QObject *parent = nullptr);
     Q_INVOKABLE int taskCount();
-    Q_INVOKABLE void openFile();
     Q_INVOKABLE QString saveCheck(QString name,QString date,QString progress);
-    Q_INVOKABLE void saveFile(QString name,QString date,QString progress);
-    QString getCurTasks() const;
+    Q_INVOKABLE bool insertTask(QString name,QString date,QString progress);
+    Q_INVOKABLE QSqlQueryModel* getModel();
 
 signals:
 private:
-    QString curTasks;
+    bool createConnection();
+    bool createTable();
+    QSqlDatabase db;
+    QSqlQueryModel *tableModel;
 };
 
 #endif // TASKLOGIC_H

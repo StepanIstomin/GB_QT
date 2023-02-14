@@ -3,36 +3,24 @@
 #include <QTextStream>
 #include <QDate>
 #include <QDebug>
+#include <QSqlQuery>
+
 
 TaskLogic::TaskLogic(QObject *parent)
     : QObject{parent}
 {
-    //openFile();
-    //qDebug() << curTasks;
+    createConnection();
+    createTable();
+
+    tableModel = new QSqlQueryModel(this);
 }
 
 int TaskLogic::taskCount()
 {
-    int tCount = 0;
-    QFile file ("tasks.txt");
-    if (file.open(QIODevice::ReadOnly)){
-        QByteArray ba = file.readAll();
-        QString text(ba);
-        tCount = text.count("\r\n", Qt::CaseSensitive);;
-        file.close();
-    }
-    return tCount;
-}
-
-void TaskLogic::openFile()
-{
-    QFile file ("tasks.txt");
-    if (file.open(QIODevice::ReadOnly)){
-        QByteArray ba = file.readAll();
-        QString text(ba);
-        curTasks = text;
-        file.close();
-    }
+    QSqlQuery query;
+    query.exec(tr("SELECT COUNT(*) FROM taskslist"));
+    query.next ();
+    return query.value(0).toInt();
 }
 
 QString TaskLogic::saveCheck(QString name, QString date, QString progress)
@@ -60,20 +48,54 @@ QString TaskLogic::saveCheck(QString name, QString date, QString progress)
     return errorMsg;
 }
 
-void TaskLogic::saveFile(QString name, QString date, QString progress)
-
+bool TaskLogic::createConnection()
 {
-    QString str = name + "\t" + date + "\t" + progress + "\r\n"; // \r\n - windows variant
-
-    QFile file ("tasks.txt");
-    if (file.open(QIODevice::Append)){
-        QTextStream stream(&file);
-        stream << str;
-        file.close();
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("tasks.db");
+    if (db.open()){
+        //qDebug() << "DB connection success";
+        return true;
+    }
+    else{
+        qDebug() << "DB connection error";
+        return false;
     }
 }
 
-QString TaskLogic::getCurTasks() const
+bool TaskLogic::createTable()
 {
-    return curTasks;
+    QSqlQuery query;
+    QString request = "CREATE TABLE IF NOT EXISTS taskslist ("
+                      "id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, "
+                      "name TEXT, date VARCHAR(10), progress INTEGER(1));";
+    if (!query.exec(request)){
+        //qDebug() << "Unable to create table";
+        return false;
+    }
+    //qDebug() << "Table created";
+    return true;
+}
+
+bool TaskLogic::insertTask(QString name, QString date, QString progress)
+{
+    QString sample = "INSERT INTO taskslist (name, date, progress) "
+                     "VALUES ('%1','%2',%3);";
+    bool digit;
+    qint16 decProgress = progress.toInt(&digit, 10);
+    QString request = sample.arg(name).arg(date).arg(decProgress);
+    //qDebug() << request;
+    QSqlQuery query;
+    if (!query.exec(request)){
+        //qDebug() << "error adding task to table";
+        return false;
+    }
+    //qDebug() << "the task was added to the table successfully";
+    return true;
+}
+
+QSqlQueryModel* TaskLogic::getModel()
+{
+    tableModel->setQuery("SELECT * FROM tasks");
+    //engine.rootContext()->setContextProperty("tableModel", tableModel);
+    return tableModel;
 }

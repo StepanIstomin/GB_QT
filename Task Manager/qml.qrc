@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>SaveButton.qml</file>
+        <file>TaskWindow.qml</file>
     </qresource>
     <qresource prefix="/img">
         <file>button.png</file>

@@ -1,5 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQmlEngine>
 
 #include "tasklogic.h"
 
@@ -19,6 +21,10 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+
+    TaskLogic taskLogic;
+    engine.rootContext()->setContextProperty("_taskLogic", &taskLogic);
+    engine.rootContext()->setContextProperty("tableModel", taskLogic.getModel());
     engine.load(url);
 
     return app.exec();

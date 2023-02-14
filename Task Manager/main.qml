@@ -12,12 +12,12 @@ Window {
     visible: true
     title: qsTr("Планировщик задач")
 
-    TaskLogic{
+    /*TaskLogic{
         id: _taskLogic
-    }
+    }*/
     onClosing: {
         if (_taskLogic.saveCheck(name.text,deadline.text,progress.text) === ""){
-            _taskLogic.saveFile(name.text,deadline.text,progress.text)
+            _taskLogic.insertTask(name.text,deadline.text,progress.text)
         }
         else {
             close.accepted = false
@@ -76,6 +76,7 @@ Window {
             id: tasksCount
             Layout.row: 1
             Layout.column: 0
+            Layout.leftMargin: 10
             placeholderText: "Количество существующих задач: " + _taskLogic.taskCount()
         }
 
@@ -86,7 +87,7 @@ Window {
             height: 30
             onClicked: {
                 if (_taskLogic.saveCheck(name.text,deadline.text,progress.text) === ""){
-                    _taskLogic.saveFile(name.text,deadline.text,progress.text)
+                    _taskLogic.insertTask(name.text,deadline.text,progress.text)
                     name.text = ""
                     deadline.text = ""
                     progress.text = ""
@@ -96,6 +97,18 @@ Window {
                     errorDialog.text = _taskLogic.saveCheck(name.text,deadline.text,progress.text)
                     errorDialog.open()
                 }
+            }
+        }
+        Button{
+            Layout.row: 2
+            Layout.column: 0
+            text: "Посмотреть существующие задачи"
+            Layout.leftMargin: 10
+            width: 250
+            height: 30
+            onClicked: {
+                _taskLogic.getModel()
+                tableView.show()
             }
         }
     }
@@ -112,5 +125,11 @@ Window {
         buttons: MessageDialog.Yes | MessageDialog.No
         onAccepted: this.close
         onRejected: Qt.exit(0)
+    }
+
+
+    TaskWindow {
+            id: tableView
+            title: qsTr("Задачи")
     }
 }
