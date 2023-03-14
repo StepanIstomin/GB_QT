@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>page1.qml</file>
+        <file>LoadScript.js</file>
+        <file>CredentialsCheck.js</file>
+        <file>page2.qml</file>
+    </qresource>
+</RCC>
