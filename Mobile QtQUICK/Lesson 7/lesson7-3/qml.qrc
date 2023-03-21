@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>TCombobox.qml</file>
+        <file>darrow.png</file>
+    </qresource>
+</RCC>
